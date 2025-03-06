@@ -1,6 +1,6 @@
 'use server'
 
-import {LoginUserActionState} from "@/features/authentication/actions/login-user-action-state";
+import {LoginUserActionState} from "@/features/authentication/login/actions/login-user-action-state";
 import {createClient} from "@/utils/supabase/server";
 import {redirect} from "next/navigation";
 import {homePageRoute} from "@/utils/routing/route-names";
