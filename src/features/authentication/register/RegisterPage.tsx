@@ -2,13 +2,10 @@
 
 import Form from "next/form";
 import {useActionState} from "react";
-import loginUserAction from "@/features/authentication/login/actions/login-user-action";
-import Link from "next/link";
-import {registerPageRoute} from "@/utils/routing/route-names";
+import registerUserAction from "@/features/authentication/register/actions/register-user-action";
 
-export default function LoginPage() {
-
-    const [state, action, isPending] = useActionState(loginUserAction, { status: 'idle' })
+export default function RegisterPage() {
+    const [state, action, isPending] = useActionState(registerUserAction, { status: 'idle' })
 
     return (
         <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
@@ -16,8 +13,8 @@ export default function LoginPage() {
                 <div className="bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-700">
                     <div className="p-8">
                         <div className="text-center mb-8">
-                            <h2 className="text-3xl font-bold text-white">Welcome Back</h2>
-                            <p className="text-gray-400 mt-2">Log in to manage your expenses</p>
+                            <h2 className="text-3xl font-bold text-white">Welcome to ExpensePal</h2>
+                            <p className="text-gray-400 mt-2">Create an account to manage your expenses</p>
                         </div>
 
                         {state.message && (
@@ -61,6 +58,23 @@ export default function LoginPage() {
                                     <span className={'text-red-400 inline-block mt-1'}>{state.fieldErrors?.password}</span>
                                 </div>
 
+                                <div>
+                                    <div className="flex items-center justify-between mb-1">
+                                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300">
+                                            Confirm Password
+                                        </label>
+                                    </div>
+                                    <input
+                                        id="confirmPassword"
+                                        type="text"
+                                        name="confirmPassword"
+                                        defaultValue={state.formData?.get('confirmPassword')?.toString()}
+                                        className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                                        placeholder="••••••••"
+                                    />
+                                    <span className={'text-red-400 inline-block mt-1'}>{state.fieldErrors?.confirmPassword}</span>
+                                </div>
+
                                 <button
                                     type="submit"
                                     disabled={isPending}
@@ -72,23 +86,23 @@ export default function LoginPage() {
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            Logging in...
+                                            Creating account...
                                         </>
                                     ) : (
-                                        'Log In'
+                                        'Register'
                                     )}
                                 </button>
                             </div>
                         </Form>
 
-                        <div className="mt-6 text-center">
-                            <p className="text-gray-400">
-                                Do not have an account?{' '}
-                                <Link href={registerPageRoute()} className="text-teal-400 hover:text-teal-300 font-medium">
-                                    Register now
-                                </Link>
-                            </p>
-                        </div>
+                        {/*<div className="mt-6 text-center">
+                        <p className="text-gray-400">
+                            Don't have an account?{' '}
+                            <Link href="/register" className="text-teal-400 hover:text-teal-300 font-medium">
+                                Sign up
+                            </Link>
+                        </p>
+                    </div>*/}
                     </div>
 
                     <div className="bg-gradient-to-r from-teal-600 to-emerald-600 p-4 text-white text-center">
