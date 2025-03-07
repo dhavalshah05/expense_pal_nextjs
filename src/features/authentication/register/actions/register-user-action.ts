@@ -4,6 +4,7 @@ import {createClient} from "@/utils/supabase/server";
 import {redirect} from "next/navigation";
 import {RegisterUserActionState} from "@/features/authentication/register/actions/register-user-action-state";
 import {loginPageRoute} from "@/utils/routing/route-names";
+import { setCookie } from "@/features/shared/actions/cookie-actions"
 
 export default async function registerUserAction(
     previousState: unknown,
@@ -48,6 +49,7 @@ export default async function registerUserAction(
     }
 
     if (data) {
+        await setCookie("toast", "Account created. Please login to continue.")
         redirect(loginPageRoute());
     }
 
