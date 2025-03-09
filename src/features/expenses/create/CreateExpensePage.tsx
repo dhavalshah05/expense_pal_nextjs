@@ -1,5 +1,12 @@
 import CreateExpenseForm from "@/features/expenses/create/CreateExpenseForm";
+import getUserIdFromHeader from "@/features/shared/hooks/get-user-id-from-header";
+import {db} from "@/db";
+import {categoriesTable} from "@/db/schema";
+import {eq} from "drizzle-orm";
 const CreateExpensePage = async () => {
+    const userId = await getUserIdFromHeader();
+    const categories = await db.select().from(categoriesTable).where(eq(categoriesTable.userId, userId));
+
     return (
         <div className="bg-gray-900 flex items-center justify-center p-8 h-screen">
             <div className="w-full max-w-md">
@@ -10,13 +17,7 @@ const CreateExpensePage = async () => {
                             <p className="text-gray-400 mt-2">Track your spending</p>
                         </div>
 
-                        {/*{isSubmitted && (
-                            <div className="mb-6 p-3 bg-green-900/30 border border-green-800 text-green-400 rounded-md text-sm">
-                                Expense added successfully!
-                            </div>
-                        )}*/}
-
-                        <CreateExpenseForm categories={['First', 'Second']} />
+                        <CreateExpenseForm categories={categories} />
                     </div>
                 </div>
             </div>

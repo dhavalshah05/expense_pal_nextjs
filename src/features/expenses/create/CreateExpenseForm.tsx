@@ -1,11 +1,18 @@
-import Form from "next/form";
+'use client';
 
-interface CreateExpensePageProps {
-    categories: string[]
+import Form from "next/form";
+import {useActionState} from "react";
+import createExpenseAction from "@/features/expenses/create/actions/create-expense-action";
+
+interface CreateExpenseFormProps {
+    categories: { id: string, name: string }[]
 }
-const CreateExpenseForm = ({ categories }: CreateExpensePageProps) => {
+
+const CreateExpenseForm = ({categories}: CreateExpenseFormProps) => {
+    const [state, action, isPending] = useActionState(createExpenseAction, {status: 'idle'});
+
     return (
-        <Form action={''}>
+        <Form action={action}>
             <div className="space-y-5">
                 {/* Amount Field */}
                 <div>
@@ -22,15 +29,15 @@ const CreateExpenseForm = ({ categories }: CreateExpensePageProps) => {
                             type="number"
                             step="0.01"
                             min="0"
-                            /*value={formData.amount}
-                            onChange={handleChange}*/
+                            required
+                            defaultValue={state.formData?.get("amount")?.toString()}
                             className="w-full pl-10 px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                             placeholder="0.00"
                         />
                     </div>
-                    {/*{errors.amount && (
-                                        <span className="text-red-400 inline-block mt-1">{errors.amount}</span>
-                                    )}*/}
+                    {state.fieldErrors?.amount && (
+                        <span className="text-red-400 inline-block mt-1">{state.fieldErrors?.amount?.at(0)}</span>
+                    )}
                 </div>
 
                 {/* Date Field */}
@@ -42,13 +49,13 @@ const CreateExpenseForm = ({ categories }: CreateExpensePageProps) => {
                         id="date"
                         name="date"
                         type="date"
-                        /*value={formData.date}
-                        onChange={handleChange}*/
+                        required
+                        defaultValue={state.formData?.get("date")?.toString()}
                         className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                     />
-                    {/*{errors.date && (
-                                        <span className="text-red-400 inline-block mt-1">{errors.date}</span>
-                                    )}*/}
+                    {state.fieldErrors?.date && (
+                        <span className="text-red-400 inline-block mt-1">{state.fieldErrors?.date?.at(0)}</span>
+                    )}
                 </div>
 
                 {/* Category Dropdown */}
@@ -59,18 +66,13 @@ const CreateExpenseForm = ({ categories }: CreateExpensePageProps) => {
                     <select
                         id="category"
                         name="category"
-                        /*value={formData.category}
-                        onChange={handleChange}*/
                         className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
                     >
-                        <option value="" disabled>Select category</option>
+
                         {categories.map(category => (
-                            <option key={category} value={category}>{category}</option>
+                            <option key={category.id} value={category.id}>{category.name}</option>
                         ))}
                     </select>
-                    {/*{errors.category && (
-                                        <span className="text-red-400 inline-block mt-1">{errors.category}</span>
-                                    )}*/}
                 </div>
 
                 {/* Description Textarea */}
@@ -81,8 +83,6 @@ const CreateExpenseForm = ({ categories }: CreateExpensePageProps) => {
                     <textarea
                         id="description"
                         name="description"
-                        /*value={formData.description}
-                        onChange={handleChange}*/
                         rows={2}
                         className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-none"
                         placeholder="What was this expense for?"
@@ -92,21 +92,23 @@ const CreateExpenseForm = ({ categories }: CreateExpensePageProps) => {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    /*disabled={isPending}*/
+                    disabled={isPending}
                     className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-500 text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-teal-500 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center"
                 >
-                    {/*{isPending ? (
-                                        <>
-                                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                            </svg>
-                                            Saving...
-                                        </>
-                                    ) : (
-                                        'Add Expense'
-                                    )}*/}
-                    Add Expense
+                    {isPending ? (
+                        <>
+                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor"
+                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Saving...
+                        </>
+                    ) : (
+                        'Add Expense'
+                    )}
                 </button>
             </div>
         </Form>
