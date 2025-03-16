@@ -6,7 +6,7 @@ import {
 import {db} from "@/db";
 import {expensesTable} from "@/db/schema";
 import getUserIdFromHeader from "@/features/shared/hooks/get-user-id-from-header";
-import {toPaisa} from "@/utils/currency/currency-util";
+import currencyUtils from "@/utils/currency/currency-utils";
 
 export default async function createExpenseAction(previousState: unknown, formData: FormData): Promise<CreateExpenseActionState> {
     const rawData = {
@@ -28,7 +28,7 @@ export default async function createExpenseAction(previousState: unknown, formDa
     const userId = await getUserIdFromHeader();
 
     await db.insert(expensesTable).values({
-        amount: toPaisa(result.data.amount),
+        amount: currencyUtils.toPaisa(result.data.amount),
         expenseDate: result.data.date,
         description: result.data.description,
         categoryId: result.data.categoryId,
