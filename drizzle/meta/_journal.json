@@ -15,6 +15,13 @@
       "when": 1741527050656,
       "tag": "0001_cuddly_black_cat",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742140649889,
+      "tag": "0002_optimal_black_cat",
+      "breakpoints": true
     }
   ]
 }
