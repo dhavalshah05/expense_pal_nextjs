@@ -1,11 +1,12 @@
 import CreateExpenseForm from "@/features/expenses/create/CreateExpenseForm";
 import getUserIdFromHeader from "@/features/shared/hooks/get-user-id-from-header";
 import {db} from "@/db";
-import {categoriesTable} from "@/db/schema";
+import {categoriesTable, expenseAccountsTable} from "@/db/schema";
 import {eq} from "drizzle-orm";
 const CreateExpensePage = async () => {
     const userId = await getUserIdFromHeader();
     const categories = await db.select().from(categoriesTable).where(eq(categoriesTable.userId, userId));
+    const expenseAccounts = await db.select().from(expenseAccountsTable).where(eq(expenseAccountsTable.userId, userId));
 
     return (
         <div className="bg-gray-900 flex items-center justify-center p-8 h-max">
@@ -17,7 +18,7 @@ const CreateExpensePage = async () => {
                             <p className="text-gray-400 mt-2">Track your spending</p>
                         </div>
 
-                        <CreateExpenseForm categories={categories} />
+                        <CreateExpenseForm categories={categories} expenseAccounts={expenseAccounts} />
                     </div>
                 </div>
             </div>

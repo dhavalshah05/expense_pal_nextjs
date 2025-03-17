@@ -7,9 +7,10 @@ import {showSuccessToast} from "@/utils/toast/custom-toast";
 
 interface CreateExpenseFormProps {
     categories: { id: string, name: string }[]
+    expenseAccounts: { id: string, name: string }[]
 }
 
-const CreateExpenseForm = ({categories}: CreateExpenseFormProps) => {
+const CreateExpenseForm = ({categories, expenseAccounts}: CreateExpenseFormProps) => {
     const [state, action, isPending] = useActionState(createExpenseAction, {status: 'idle'});
 
     useEffect(() => {
@@ -80,6 +81,23 @@ const CreateExpenseForm = ({categories}: CreateExpenseFormProps) => {
 
                         {categories.map(category => (
                             <option key={category.id} value={category.id}>{category.name}</option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Expense Account Dropdown */}
+                <div>
+                    <label htmlFor="account" className="block text-sm font-medium text-gray-300 mb-1">
+                        Account
+                    </label>
+                    <select
+                        id="account"
+                        name="account"
+                        className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                    >
+
+                        {expenseAccounts.map(expenseAccount => (
+                            <option key={expenseAccount.id} value={expenseAccount.id}>{expenseAccount.name}</option>
                         ))}
                     </select>
                 </div>

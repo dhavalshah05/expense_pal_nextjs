@@ -13,6 +13,7 @@ export default async function createExpenseAction(previousState: unknown, formDa
         amount: formData.get('amount')?.toString() || '',
         date: formData.get('date')?.toString() || '',
         categoryId: formData.get('category')?.toString() || '',
+        accountId: formData.get('account')?.toString() || '',
         description: formData.get('description')?.toString() || ''
     };
 
@@ -32,6 +33,7 @@ export default async function createExpenseAction(previousState: unknown, formDa
         expenseDate: result.data.date,
         description: result.data.description,
         categoryId: result.data.categoryId,
+        accountId: result.data.accountId,
         userId: userId
     })
 

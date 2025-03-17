@@ -41,6 +41,10 @@ export const createExpenseFormSchema = z.object({
         .string()
         .min(1, { message: "Category is required" }),
 
+    accountId: z
+        .string()
+        .min(1, { message: "Account is required" }),
+
     description: z
         .string()
         .optional()

@@ -28,6 +28,7 @@ export const expensesTable = pgTable('expenses', {
     description: varchar('description').notNull(),
 
     categoryId: text('category_id').notNull(),
+    accountId: text('account_id'),
     userId: text('user_id').notNull(),
 
     createdAt: timestamp('created_at').defaultNow().notNull(),
