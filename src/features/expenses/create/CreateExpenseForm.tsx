@@ -1,8 +1,9 @@
 'use client';
 
 import Form from "next/form";
-import {useActionState} from "react";
+import {useActionState, useEffect} from "react";
 import createExpenseAction from "@/features/expenses/create/actions/create-expense-action";
+import {showSuccessToast} from "@/utils/toast/custom-toast";
 
 interface CreateExpenseFormProps {
     categories: { id: string, name: string }[]
@@ -10,6 +11,14 @@ interface CreateExpenseFormProps {
 
 const CreateExpenseForm = ({categories}: CreateExpenseFormProps) => {
     const [state, action, isPending] = useActionState(createExpenseAction, {status: 'idle'});
+
+    useEffect(() => {
+        if (state.status === 'success') {
+            if (state.message !== undefined) {
+                showSuccessToast(state.message);
+            }
+        }
+    }, [state]);
 
     return (
         <Form action={action}>

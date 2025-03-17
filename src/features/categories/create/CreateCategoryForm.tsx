@@ -1,11 +1,20 @@
 'use client';
 
 import Form from "next/form";
-import {useActionState} from "react";
+import {useActionState, useEffect} from "react";
 import createCategoryAction from "@/features/categories/create/actions/create-category-action";
+import {showSuccessToast} from "@/utils/toast/custom-toast";
 
 const CreateCategoryForm = () => {
     const [state, action, isPending] = useActionState(createCategoryAction, {status: 'idle'})
+
+    useEffect(() => {
+        if (state.status === 'success') {
+            if (state.message !== undefined) {
+                showSuccessToast(state.message);
+            }
+        }
+    }, [state]);
 
     return (
         <Form action={action}>

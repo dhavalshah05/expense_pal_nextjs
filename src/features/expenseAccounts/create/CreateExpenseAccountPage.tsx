@@ -2,7 +2,7 @@ import CreateExpenseAccountForm from "@/features/expenseAccounts/create/CreateEx
 
 const CreateExpenseAccountPage = async () => {
     return (
-        <div className="bg-gray-900 flex items-center justify-center p-8 h-screen">
+        <div className="bg-gray-900 flex items-center justify-center p-8 h-max">
             <div className="w-full max-w-md">
                 <div className="bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-700">
                     <div className="p-8">

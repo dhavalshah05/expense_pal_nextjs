@@ -1,12 +1,21 @@
 'use client';
 
 import Form from "next/form";
-import {useActionState} from "react";
+import {useActionState, useEffect} from "react";
 import {createExpenseAccountAction} from "@/features/expenseAccounts/create/actions/create-expense-account-action";
 import {EMPTY_FORM_ACTION_STATE} from "@/features/shared/form/form-action-state";
+import {showSuccessToast} from "@/utils/toast/custom-toast";
 
 const CreateExpenseAccountForm = () => {
     const [state, createExpenseAccountActionDispatch, isPending] = useActionState(createExpenseAccountAction, EMPTY_FORM_ACTION_STATE)
+
+    useEffect(() => {
+        if (state.status === 'success') {
+            if (state.message !== undefined) {
+                showSuccessToast(state.message);
+            }
+        }
+    }, [state]);
 
     return (
         <Form action={createExpenseAccountActionDispatch}>
