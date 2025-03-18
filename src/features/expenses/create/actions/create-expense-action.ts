@@ -7,6 +7,8 @@ import {db} from "@/db";
 import {expensesTable} from "@/db/schema";
 import getUserIdFromHeader from "@/features/shared/hooks/get-user-id-from-header";
 import currencyUtils from "@/utils/currency/currency-utils";
+import {revalidatePath} from "next/cache";
+import {expensesPageRoute} from "@/utils/routing/route-names";
 
 export default async function createExpenseAction(previousState: unknown, formData: FormData): Promise<CreateExpenseActionState> {
     const rawData = {
@@ -37,6 +39,7 @@ export default async function createExpenseAction(previousState: unknown, formDa
         userId: userId
     })
 
+    revalidatePath(expensesPageRoute())
     return {
         status: 'success',
         message: 'Expense created',
