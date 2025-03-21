@@ -9,9 +9,18 @@ const toPaisa = (amount: number) =>
 const fromPaisa = (amount: number) =>
     new Big(amount).div(100).round(2).toNumber();
 
+const formatCurrency = (amount: number) => {
+    const formatter = new Intl.NumberFormat('en-IN', {
+        style: 'currency',
+        currency: 'INR'
+    })
+    return formatter.format(amount);
+}
+
 const currencyUtils = {
     toPaisa,
-    fromPaisa
+    fromPaisa,
+    formatCurrency
 }
 
 export default currencyUtils;

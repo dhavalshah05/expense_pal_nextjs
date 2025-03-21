@@ -55,7 +55,9 @@ export default async function ExpensesPage() {
                 <TableBody>
                     {expenses.map(expense => (
                         <TableRow key={expense.id}>
-                            <TableCell className={"text-right"}>{currencyUtils.fromPaisa(expense.amount)}</TableCell>
+                            <TableCell className={"text-right"}>
+                                {currencyUtils.formatCurrency(currencyUtils.fromPaisa(expense.amount))}
+                            </TableCell>
                             <TableCell>{expense.description}</TableCell>
                             <TableCell>{expense.expenseDate.toLocaleDateString()}</TableCell>
                             <TableCell>{expense.categoryName}</TableCell>
