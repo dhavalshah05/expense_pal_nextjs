@@ -6,6 +6,7 @@ import {desc, eq, sum} from "drizzle-orm";
 import {categoriesTable, expenseAccountsTable, expensesTable} from "@/db/schema";
 import getUserIdFromHeader from "@/features/shared/hooks/get-user-id-from-header";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import CategoryDashboardSummaryRow from "@/features/dashboard/CategoryDashboardSummaryRow";
 
 export default async function DashboardPage() {
     const userId = await getUserIdFromHeader();
@@ -90,10 +91,7 @@ async function SummaryByCategoryCard(
                 </TableHeader>
                 <TableBody>
                     {summaryResult.map(result => (
-                        <TableRow key={result.id}>
-                            <TableCell>{result.name}</TableCell>
-                            <TableCell className={"text-right text-gray-900 font-bold"}>{result.amount}</TableCell>
-                        </TableRow>
+                        <CategoryDashboardSummaryRow key={result.id} id={result.id} name={result.name} amount={result.amount} />
                     ))}
                 </TableBody>
             </Table>
