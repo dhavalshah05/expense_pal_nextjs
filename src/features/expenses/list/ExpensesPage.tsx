@@ -29,6 +29,7 @@ export default async function ExpensesPage() {
             accountId: expensesTable.accountId,
             accountName: expenseAccountsTable.name,
             userId: expensesTable.userId,
+            isShared: expensesTable.isShared,
         })
         .from(expensesTable)
         .innerJoin(categoriesTable, eq(categoriesTable.id, expensesTable.categoryId))
@@ -53,17 +54,20 @@ export default async function ExpensesPage() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {expenses.map(expense => (
-                        <TableRow key={expense.id}>
-                            <TableCell className={"text-right"}>
+                    {expenses.map(expense => {
+                        return (<TableRow key={expense.id}>
+                            <TableCell className={`text-right relative ${expense.isShared ? 'bg-gray-100' : ''}`}>
+                                { expense.isShared && (
+                                    <div className={"h-full w-1 bg-gray-500 absolute left-0 top-0"}/>
+                                )}
                                 {currencyUtils.formatCurrency(currencyUtils.fromPaisa(expense.amount))}
                             </TableCell>
                             <TableCell>{expense.description}</TableCell>
                             <TableCell>{expense.expenseDate.toLocaleDateString()}</TableCell>
                             <TableCell>{expense.categoryName}</TableCell>
                             <TableCell>{expense.accountName}</TableCell>
-                        </TableRow>
-                    ))}
+                        </TableRow>)
+                    })}
                 </TableBody>
             </Table>
 

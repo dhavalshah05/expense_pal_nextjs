@@ -26,6 +26,7 @@ export const expensesTable = pgTable('expenses', {
     amount: integer('amount').notNull(),
     expenseDate: timestamp('expense_date').defaultNow().notNull(),
     description: varchar('description').notNull(),
+    isShared: boolean('isShared').default(false),
 
     categoryId: text('category_id').notNull(),
     accountId: text('account_id'),
@@ -34,10 +35,3 @@ export const expensesTable = pgTable('expenses', {
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
-
-export const sharedExpensesTable = pgTable('shared_expenses', {
-    id: text('id').primaryKey().$defaultFn(() => createId()),
-    isAddedToSplit: boolean('is_added_to_split').default(false),
-
-    expenseId: text('expense_id').notNull(),
-})

@@ -1,0 +1,1 @@
+ALTER TABLE "expenses" ADD COLUMN "isShared" boolean DEFAULT false;
