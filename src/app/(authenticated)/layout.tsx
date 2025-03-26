@@ -1,14 +1,18 @@
-import Header from "@/features/shared/components/header/Header";
+import SidebarHost from "@/features/shared/components/sidebar/SidebarHost";
+import getUser from "@/features/shared/hooks/get-user";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-      <main className="grid grid-cols-1 grid-rows-[auto_1fr] h-screen">
-        <Header />
-        {children}
-      </main>
-  );
+export default async function RootLayout(
+    {
+        children,
+    }: Readonly<{
+        children: React.ReactNode;
+    }>
+) {
+    const user = await getUser();
+
+    return (
+        <SidebarHost userEmail={user.userEmail}>
+            {children}
+        </SidebarHost>
+    );
 }
