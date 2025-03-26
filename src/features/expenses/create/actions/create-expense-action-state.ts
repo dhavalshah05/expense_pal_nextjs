@@ -48,5 +48,9 @@ export const createExpenseFormSchema = z.object({
     description: z
         .string()
         .optional()
-        .transform((val) => val || "")
+        .transform((val) => val || ""),
+
+    isSharedExpense: z
+        .boolean()
+        .optional()
 })

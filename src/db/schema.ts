@@ -1,4 +1,4 @@
-import {integer, pgTable, text, timestamp, varchar} from "drizzle-orm/pg-core";
+import {integer, pgTable, text, timestamp, varchar, boolean} from "drizzle-orm/pg-core";
 import { createId } from '@paralleldrive/cuid2';
 
 export const categoriesTable = pgTable('categories', {
@@ -34,3 +34,10 @@ export const expensesTable = pgTable('expenses', {
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+export const sharedExpensesTable = pgTable('shared_expenses', {
+    id: text('id').primaryKey().$defaultFn(() => createId()),
+    isAddedToSplit: boolean('is_added_to_split').default(false),
+
+    expenseId: text('expense_id').notNull(),
+})

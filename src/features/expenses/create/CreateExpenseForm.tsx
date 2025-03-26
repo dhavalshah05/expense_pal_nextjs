@@ -4,6 +4,7 @@ import Form from "next/form";
 import {useActionState, useEffect} from "react";
 import createExpenseAction from "@/features/expenses/create/actions/create-expense-action";
 import {showSuccessToast} from "@/utils/toast/custom-toast";
+import {Checkbox} from "@/components/ui/checkbox";
 
 interface CreateExpenseFormProps {
     categories: { id: string, name: string }[]
@@ -114,6 +115,14 @@ const CreateExpenseForm = ({categories, expenseAccounts}: CreateExpenseFormProps
                         className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-none"
                         placeholder="What was this expense for?"
                     ></textarea>
+                </div>
+
+                <div className={"flex flex-row gap-2 items-center"}>
+                    <Checkbox id={"isSharedExpense"} name={"isSharedExpense"} />
+
+                    <label htmlFor={"isSharedExpense"} className={"text-white"}>
+                        Is shared expense?
+                    </label>
                 </div>
 
                 {/* Submit Button */}
