@@ -1,3 +1,4 @@
+/*
 import {categoriesTable, expensesTable} from "@/db/schema";
 import {drizzle} from 'drizzle-orm/postgres-js'
 import postgres from 'postgres';
@@ -11,6 +12,7 @@ const connectionString = "postgresql://postgres.thppzvzvxbikxbrncrot:hap7H4SpzwR
 const client = postgres(connectionString);
 export const db = drizzle(client, {schema});
 
+/!*
 const seedDb = async () => {
     await db.delete(categoriesTable);
     console.log('✅ Categories Deleted!')
@@ -97,4 +99,6 @@ const queryDb = async () => {
 }
 
 queryDb();
+*!/
 
+*/

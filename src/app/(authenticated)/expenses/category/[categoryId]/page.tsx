@@ -4,10 +4,9 @@ export default async function ExpensesByCategoryPageWrapper(
     {
         params
     }: {
-        params: {
-            categoryId: string
-        }
+        params: Promise<{ categoryId: string }>
     }
 ) {
-    return <ExpensesByCategoryPage categoryId={params.categoryId} />;
+    const {categoryId} = await params;
+    return <ExpensesByCategoryPage categoryId={categoryId} />;
 }

@@ -30,7 +30,7 @@ export default async function CategoriesPage() {
 
 function CategoryItem(
     {
-        id,
+        // id,
         name
     }: {
         id: string,
