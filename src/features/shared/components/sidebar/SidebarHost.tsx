@@ -12,7 +12,7 @@ import React from "react";
 import Header from "@/features/shared/components/header/Header";
 import {useRouter} from "next/navigation";
 import {useIsMobile} from "@/hooks/use-mobile";
-import {bucketsPageRoute, createBucketPageRoute} from "@/utils/routing/route-names";
+import {bucketsPageRoute} from "@/utils/routing/route-names";
 
 export default function SidebarHost(
     {
