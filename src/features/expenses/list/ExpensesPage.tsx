@@ -15,6 +15,7 @@ import {
 import currencyUtils from "@/utils/currency/currency-utils";
 import Link from "next/link";
 import {createExpensePageRoute} from "@/utils/routing/route-names";
+import ClipboardIcon from "@/features/shared/components/clipboardIcon/ClipboardIcon";
 
 export default async function ExpensesPage() {
     const userId = await getUserIdFromHeader();
@@ -48,6 +49,7 @@ export default async function ExpensesPage() {
                     <TableRow>
                         <TableHead className={"text-right"}>Amount</TableHead>
                         <TableHead>Description</TableHead>
+                        <TableHead></TableHead>
                         <TableHead>Date</TableHead>
                         <TableHead>Category</TableHead>
                         <TableHead>Account</TableHead>
@@ -63,6 +65,9 @@ export default async function ExpensesPage() {
                                 {currencyUtils.formatCurrency(currencyUtils.fromPaisa(expense.amount))}
                             </TableCell>
                             <TableCell>{expense.description}</TableCell>
+                            <TableCell>
+                                <ClipboardIcon textContent={expense.description} />
+                            </TableCell>
                             <TableCell>{expense.expenseDate.toLocaleDateString()}</TableCell>
                             <TableCell>{expense.categoryName}</TableCell>
                             <TableCell>{expense.accountName}</TableCell>
