@@ -1,5 +1,5 @@
 import {db} from "@/db";
-import {categoriesTable, expenseAccountsTable, expensesTable} from "@/db/schema";
+import {bucketsTable, categoriesTable, expenseAccountsTable, expensesTable} from "@/db/schema";
 import getUserIdFromHeader from "@/features/shared/hooks/get-user-id-from-header";
 import {desc, eq} from "drizzle-orm";
 
@@ -31,10 +31,13 @@ export default async function ExpensesPage() {
             accountName: expenseAccountsTable.name,
             userId: expensesTable.userId,
             isShared: expensesTable.isShared,
+            bucketId: bucketsTable.id,
+            bucketName: bucketsTable.name,
         })
         .from(expensesTable)
         .innerJoin(categoriesTable, eq(categoriesTable.id, expensesTable.categoryId))
         .innerJoin(expenseAccountsTable, eq(expenseAccountsTable.id, expensesTable.accountId))
+        .leftJoin(bucketsTable, eq(bucketsTable.id, expensesTable.bucketId))
         .where(eq(expensesTable.userId, userId))
         .orderBy(desc(expensesTable.expenseDate))
 
@@ -51,6 +54,7 @@ export default async function ExpensesPage() {
                         <TableHead>Description</TableHead>
                         <TableHead></TableHead>
                         <TableHead>Date</TableHead>
+                        <TableHead>Bucket</TableHead>
                         <TableHead>Category</TableHead>
                         <TableHead>Account</TableHead>
                     </TableRow>
@@ -69,6 +73,7 @@ export default async function ExpensesPage() {
                                 <ClipboardIcon textContent={expense.description} date={expense.expenseDate} />
                             </TableCell>
                             <TableCell>{expense.expenseDate.toLocaleDateString()}</TableCell>
+                            <TableCell>{expense.bucketName}</TableCell>
                             <TableCell>{expense.categoryName}</TableCell>
                             <TableCell>{expense.accountName}</TableCell>
                         </TableRow>)
