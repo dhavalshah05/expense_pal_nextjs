@@ -9,9 +9,10 @@ import {Checkbox} from "@/components/ui/checkbox";
 interface CreateExpenseFormProps {
     categories: { id: string, name: string }[]
     expenseAccounts: { id: string, name: string }[]
+    buckets: { id: string, name: string }[]
 }
 
-const CreateExpenseForm = ({categories, expenseAccounts}: CreateExpenseFormProps) => {
+const CreateExpenseForm = ({categories, expenseAccounts, buckets}: CreateExpenseFormProps) => {
     const [state, action, isPending] = useActionState(createExpenseAction, {status: 'idle'});
 
     useEffect(() => {
@@ -67,6 +68,25 @@ const CreateExpenseForm = ({categories, expenseAccounts}: CreateExpenseFormProps
                     {state.fieldErrors?.date && (
                         <span className="text-red-400 inline-block mt-1">{state.fieldErrors?.date?.at(0)}</span>
                     )}
+                </div>
+
+                {/* Bucket Dropdown */}
+                <div>
+                    <label htmlFor="bucket" className="block text-sm font-medium text-gray-300 mb-1">
+                        Bucket
+                    </label>
+                    <select
+                        id="bucket"
+                        name="bucket"
+                        className="w-full px-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
+                    >
+
+                        <option value="">Select a bucket</option>
+
+                        {buckets.map(bucket => (
+                            <option key={bucket.id} value={bucket.id}>{bucket.name}</option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* Category Dropdown */}

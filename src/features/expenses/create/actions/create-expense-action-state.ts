@@ -52,5 +52,9 @@ export const createExpenseFormSchema = z.object({
 
     isSharedExpense: z
         .boolean()
-        .optional()
+        .optional(),
+
+    bucketId: z
+        .string()
+        .optional(),
 })

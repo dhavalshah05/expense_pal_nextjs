@@ -22,6 +22,7 @@ export default async function createExpenseAction(previousState: unknown, formDa
         categoryId: formData.get('category')?.toString() || '',
         accountId: formData.get('account')?.toString() || '',
         description: formData.get('description')?.toString() || '',
+        bucketId: formData.get('bucket')?.toString() || '',
         isSharedExpense: isSharedExpense,
     };
 
@@ -43,7 +44,8 @@ export default async function createExpenseAction(previousState: unknown, formDa
         categoryId: result.data.categoryId,
         accountId: result.data.accountId,
         userId: userId,
-        isShared: isSharedExpense
+        isShared: isSharedExpense,
+        bucketId: result.data.bucketId,
     })
 
     revalidatePath(expensesPageRoute())
