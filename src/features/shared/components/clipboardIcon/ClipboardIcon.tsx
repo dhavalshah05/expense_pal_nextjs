@@ -2,23 +2,26 @@
 
 import {Button} from "@/components/ui/button";
 import {ClipboardCopyIcon} from "lucide-react";
-import {showSuccessToast} from "@/utils/toast/custom-toast";
 
 export default function ClipboardIcon(
     {
         textContent,
+        date,
     }: {
         textContent: string,
+        date: Date,
     }
 ) {
 
     async function copyToClipboard() {
-        try {
-            await navigator.clipboard.writeText(textContent);
-            showSuccessToast("Copied to clipboard");
-        } catch (e: unknown) {
-            console.log(e)
-        }
+        await navigator.clipboard.writeText(`${getFormattedDate()} - ${textContent}`);
+    }
+
+    function getFormattedDate() {
+        return new Intl.DateTimeFormat('en-US', {
+            day: 'numeric',
+            month: 'short'
+        }).format(date);
     }
 
     return (

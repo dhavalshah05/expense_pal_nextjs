@@ -66,7 +66,7 @@ export default async function ExpensesPage() {
                             </TableCell>
                             <TableCell>{expense.description}</TableCell>
                             <TableCell>
-                                <ClipboardIcon textContent={expense.description} />
+                                <ClipboardIcon textContent={expense.description} date={expense.expenseDate} />
                             </TableCell>
                             <TableCell>{expense.expenseDate.toLocaleDateString()}</TableCell>
                             <TableCell>{expense.categoryName}</TableCell>
