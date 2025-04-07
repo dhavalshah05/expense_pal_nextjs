@@ -1,0 +1,1 @@
+ALTER TABLE "buckets" RENAME COLUMN "isShared" TO "isActive";

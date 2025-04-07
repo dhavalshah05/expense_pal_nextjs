@@ -6,3 +6,5 @@ export const createExpensePageRoute = () => "/expenses/create"
 export const categoriesPageRoute = () => "/categories"
 export const createCategoryPageRoute = () => "/categories/create"
 export const expenseByCategoryRoute = (categoryId: string) => `/expenses/category/${categoryId}`
+export const bucketsPageRoute = () => "/buckets"
+export const createBucketPageRoute = () => "/buckets/create"

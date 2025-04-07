@@ -12,6 +12,7 @@ import React from "react";
 import Header from "@/features/shared/components/header/Header";
 import {useRouter} from "next/navigation";
 import {useIsMobile} from "@/hooks/use-mobile";
+import {createBucketPageRoute} from "@/utils/routing/route-names";
 
 export default function SidebarHost(
     {
@@ -85,5 +86,9 @@ const SIDEBAR_ITEMS = [
     {
         title: "Accounts",
         url: "/accounts"
+    },
+    {
+        title: "Buckets",
+        url: createBucketPageRoute()
     }
 ]

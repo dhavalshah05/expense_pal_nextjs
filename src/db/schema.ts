@@ -30,8 +30,20 @@ export const expensesTable = pgTable('expenses', {
 
     categoryId: text('category_id').notNull(),
     accountId: text('account_id'),
+    bucketId: text('bucket_id'),
     userId: text('user_id').notNull(),
 
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+export const bucketsTable = pgTable('buckets', {
+    id: text('id').primaryKey().$defaultFn(() => createId()),
+    name: text('name').notNull(),
+    isActive: boolean('isActive').default(true),
+
+    userId: text('user_id').notNull(),
+
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
